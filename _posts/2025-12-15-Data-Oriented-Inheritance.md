@@ -1,5 +1,5 @@
 ---
-title: "Challenges of Data-Oriented Inheritance"
+title: "Data-Oriented Inheritance"
 date: 2025-12-15
 description: "Exploring the challenges of using inheritance when only representing static data values."
 tags: [c#, inheritance, records, design]
