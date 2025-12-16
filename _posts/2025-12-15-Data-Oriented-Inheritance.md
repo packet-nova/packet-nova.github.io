@@ -211,26 +211,31 @@ public abstract class Monster
     public abstract string Name { get; }
     public abstract int StartingHP { get; }
 }
+
 public class Goblin : Monster
 {
     public override string Name => "Goblin";
     public override int StartingHP => 5;
 }
+
 public class Skeleton : Monster
 {
     public override string Name => "Skeleton";
     public override int StartingHP => 7;
 }
+
 public class Ogre : Monster
 {
     public override string Name => "Ogre";
     public override int StartingHP => 15;
 }
+
 public class FireElemental : Monster
 {
     public override string Name => "Fire Elemental";
     public override int StartingHP => 10;
 }
+
 public class VenomousSpider : Monster
 {
     public override string Name => "Venomous Spider";
@@ -324,8 +329,8 @@ public abstract class Monster
     public abstract int StartingHP { get; }
     public abstract void Attack();
     public abstract void TakeDamage();
-
 }
+
 public class VenomousSpider : Monster
 {
     public override string Name => "Venomous Spider";
@@ -335,6 +340,7 @@ public class VenomousSpider : Monster
     {
         Console.WriteLine($"The {Name} bites with fangs dripping with venom!");
     }
+
     public override void TakeDamage()
     {
         // damage log when damage is taken. Maybe it's resistant to physical damage?
@@ -350,6 +356,7 @@ public class FireElemental : Monster
     {
         Console.WriteLine($"The {Name} launches a blazing fireball!");
     }
+
     public override void TakeDamage()
     {
         // Maybe it's IMMUNE to fire damage?
