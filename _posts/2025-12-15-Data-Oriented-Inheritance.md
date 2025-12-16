@@ -209,7 +209,6 @@ public abstract class Monster
 }
 public class Goblin : Monster
 {
-    public override MonsterType MonsterType => MonsterType.Goblin;
     public override string Name => "Goblin";
     public override int StartingHP => 5;
 }
