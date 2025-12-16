@@ -1,6 +1,8 @@
 ---
-title: Challenges of Data-Oriented Inheritance
+title: "Challenges of Data-Oriented Inheritance"
 date: 2025-12-15
+author: "Packet Nova"
+description: "Exploring the challenges of using inheritance when only representing static data values."
 tags: [c#, inheritance, records, design]
 ---
 
