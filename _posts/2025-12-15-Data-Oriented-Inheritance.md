@@ -408,6 +408,10 @@ Monster venomousSpider = Monster.CreateVenomousSpider();
 This design is perfectly reasonable as a stepping-stone, but it still will have the problem when we want to create a new property. You'll have to then go back into each static method and update it with the new parameter.
 
 #### Using a Record
+
+> The `record` type was introduced in [C# 9.0](https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/builtin-types/record).
+{: .prompt-info }
+
 Another alternative is to define `Monster` as a **record**. These are ideal for data containers because records are **immutable by default** and automatically provide equality checks, `ToString()`, and other features. The intricate details of Records are outside the scope here.
 ```cs
 public record Monster(MonsterType monsterType, string Name, int StartingHP);
@@ -422,10 +426,10 @@ Console.WriteLine($"{fireElemental.Name}: {fireElemental.StartingHP} HP");
 Console.WriteLine($"{ogre.Name}: {ogre.StartingHP} HP");
 ```
 
-Consequently, using a record still requires passing in strings and magic numbers (hardcoded values with no context) for each instance. This approach is fine for small programs, but it may introduce risks as the program grows (typos, inconsistent starting HP values, or incorrect names yet again).
+Consequently, using a record defined this way still requires passing in strings and magic numbers (hardcoded values with no context) for each instance. This approach is fine for small programs, but it may introduce risks as the program grows (typos, inconsistent starting HP values, or incorrect names yet again). You can still use a `record` type to define data-oriented classes, and that may even be preferred since you can still do computed properties in a `record`, which are inherently a `class`.
 
-> The `record` type was introduced in [C# 9.0](https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/builtin-types/record).
-{: .prompt-info }
+> Be mindful if you start needing to introduce behaviors into a `record` type, it might be time to refactor into a standard `class` instead.
+{: .prompt-tip }
 
 ## Thoughts Before You Go
 Everything discussed here isn't exhaustive, and I'd be remiss if I didn't mention that the recommended solution above using computed properties isn't prescriptive, the only, or even "the best way". I didn't dive into some advanced topics such as a `Dictionary<>` which could be a great fit to this problem if you begin managing a larger set of data-oriented types.
