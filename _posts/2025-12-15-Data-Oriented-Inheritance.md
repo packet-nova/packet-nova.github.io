@@ -1,7 +1,7 @@
 ---
-title: Data-Oriented Inheritance Challenges
+title: Challenges of Data-Oriented Inheritance
 date: 2025-12-15
-tags: [c#, inheritance]
+tags: [c#, inheritance, records, design]
 ---
 
 ## The Problem
