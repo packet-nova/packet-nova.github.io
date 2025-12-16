@@ -1,5 +1,5 @@
 ---
-title: Data-Oriented Inheritance Challenge
+title: Data-Oriented Inheritance Challenges
 date: 2025-12-15
 ---
 
