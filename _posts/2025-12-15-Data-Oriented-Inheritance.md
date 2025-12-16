@@ -1,5 +1,5 @@
 ---
-title: Data-Oriented Inheritance Anti-Pattern
+title: Data-Oriented Inheritance Challenge
 date: 2025-12-15
 ---
 
