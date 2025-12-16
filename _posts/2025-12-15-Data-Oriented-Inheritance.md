@@ -4,6 +4,9 @@ date: 2025-12-15
 ---
 
 ## The Problem
+
+**"I've created 15 classes and they all do the same thing... why did I do this?"**
+
 Disclaimer: *This post does not advocate for or against inheritance or composition in general. I'd like to focus specifically on why using inheritance solely to represent different data values is an anti-pattern, and what we can use instead. This was inspired by lessons learned while working with classes, enums, inheritance, and extracting strings from enums.*
 
 Audience: Beginner to early-intermediate/novice.
