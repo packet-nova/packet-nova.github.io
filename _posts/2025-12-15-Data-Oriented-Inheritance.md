@@ -428,7 +428,7 @@ Console.WriteLine($"{ogre.Name}: {ogre.StartingHP} HP");
 
 Consequently, using a record defined this way still requires passing in strings and magic numbers (hardcoded values with no context) for each instance. This approach is fine for small programs, but it may introduce risks as the program grows (typos, inconsistent starting HP values, or incorrect names yet again). You can still use a `record` type to define data-oriented classes, and that may even be preferred since you can still do computed properties in a `record`, which are inherently a `class`.
 
-> Be mindful if you start needing to introduce behaviors into a `record` type, it might be time to refactor into a standard `class` instead.
+> Be mindful if you need to start introductin behaviors into a `record` type, it might be time to refactor into a standard `class` instead.
 {: .prompt-tip }
 
 ## Thoughts Before You Go
