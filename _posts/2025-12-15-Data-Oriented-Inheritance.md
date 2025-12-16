@@ -1,6 +1,7 @@
 ---
 title: Data-Oriented Inheritance Challenges
 date: 2025-12-15
+tags: [C#, inheritance]
 ---
 
 ## The Problem
