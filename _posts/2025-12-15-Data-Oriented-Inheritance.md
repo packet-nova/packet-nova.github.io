@@ -204,7 +204,6 @@ With inheritance we can declare a base class, and even make it `abstract` which 
 ```cs
 public abstract class Monster
 {
-    public abstract MonsterType MonsterType { get; }
     public abstract string Name { get; }
     public abstract int StartingHP { get; }
 }
@@ -216,25 +215,21 @@ public class Goblin : Monster
 }
 public class Skeleton : Monster
 {
-    public override MonsterType MonsterType => MonsterType.Skeleton;
     public override string Name => "Skeleton";
     public override int StartingHP => 7;
 }
 public class Ogre : Monster
 {
-    public override MonsterType MonsterType => MonsterType.Ogre;
     public override string Name => "Ogre";
     public override int StartingHP => 15;
 }
 public class FireElemental : Monster
 {
-    public override MonsterType MonsterType => MonsterType.FireElemental;
     public override string Name => "Fire Elemental";
     public override int StartingHP => 10;
 }
 public class VenomousSpider : Monster
 {
-    public override MonsterType MonsterType => MonsterType.VenomousSpider;
     public override string Name => "Venomous Spider";
     public override int StartingHP => 12;
 }
