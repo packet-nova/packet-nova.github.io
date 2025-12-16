@@ -26,10 +26,12 @@ Console.WriteLine(goblin);
 
 public enum Monster { Goblin, Skeleton, Ogre }
 ```
+
 **Console Output:**
 ```console
 Goblin
 ```
+
 As a basic start we are simply using an enumeration that can easily represent the monster names.
 
 By default, passing an enum value to `Console.WriteLine()` prints the enum member name as a string because `WriteLine()` calls `ToString()` internally.
@@ -44,11 +46,13 @@ Console.WriteLine(venomousSpider);
 
 public enum Monster { Goblin, Skeleton, Ogre, FireElemental, VenomousSpider }
 ```
+
 **Console Output:**
 ```console
 Ogre
 VenomousSpider
 ```
+
 Now we can see a limitation: printing the enum value gives us the member name verbatim, which may not be formatted as a *user-friendly* string. This can be problematic when displaying names to users or sending them to external systems (like files, databases, or even a UI).
 
 Let's explore a solution for getting properly formatted display names.
@@ -57,6 +61,7 @@ Using the following enum:
 ```cs
 public enum Monster { Goblin, Skeleton, Ogre, FireElemental, VenomousSpider }
 ```
+
 We can use a switch expression to map enum values to formatted display strings. The method accepts an enum value as a parameter and returns the formatted string:
 ```cs
 Console.WriteLine(GetMonsterDisplayName(Monster.Ogre));
@@ -76,6 +81,7 @@ string GetMonsterDisplayName(Monster monster)
     };
 }
 ```
+
 **Console Output:**
 ```console
 Ogre
@@ -109,6 +115,7 @@ string GetMonsterDisplayName(Monster monster)
 }
 public enum Monster { Goblin, Skeleton, Ogre, FireElemental, VenomousSpider }
 ```
+
 You could argue that you'd want yet another method to return an `int` from a `Monster` enum value, similar to how we did with strings:
 ```cs
 int GetMonsterStartingHP(Monster monster)
@@ -124,12 +131,14 @@ int GetMonsterStartingHP(Monster monster)
     };
 }
 ```
+
 Now we can call it like this:
 ```cs
 Monster goblin = Monster.Goblin;
 string goblinName = GetMonsterDisplayName(goblin);
 int goblinHealth = GetMonsterStartingHP(goblin);
 ```
+
 This approach becomes increasingly time-consuming to maintain. Every new monster requires updating both switch expressions (name and starting HP), and every new property means adding yet another mapping method. It’s tedious, error-prone, and easy to break as the codebase grows.
 
 Next, let’s explore how we can try to solve this by combining enums with classes.
@@ -138,6 +147,7 @@ The solution is to create a class that stores monster data while using an enum f
 ```cs
 public enum MonsterType { Goblin, Skeleton, Ogre, FireElemental, VenomousSpider }
 ```
+
 Define our class so we have a `Name`, `StartingHP`, and a `MonsterType`:
 ```cs
 public class Monster
@@ -154,6 +164,7 @@ public class Monster
     }
 }
 ```
+
 Now we can instantiate Monsters:
 ```cs
 Monster fireElemental = new(MonsterType.FireElemental, "Fire Elemental", 10);
@@ -164,12 +175,14 @@ Console.WriteLine($"{fireElemental.Name}: {fireElemental.StartingHP} HP");
 Console.WriteLine($"{venomousSpider.Name}: {venomousSpider.StartingHP} HP"); 
 Console.WriteLine($"{skeleton.Name}: {skeleton.StartingHP} HP");
 ```
+
 **Console Output:**
 ```console
 Fire Elemental: 10 HP
 Venomous Spider: 12 HP
 Skeleton: 7 HP
 ```
+
 This is now a significant improvement over maintaining separate methods that are not encapsulated within a class, and it greatly simplifies it while reducing the fragility of our code base when we want to create monsters. Also, all of the data is stored on the object rather than variables floating around in the code we have to keep track of.
 
 But... what prevents us from:
@@ -219,6 +232,7 @@ public class VenomousSpider : Monster
     public override int StartingHP => 12;
 }
 ```
+
 Now we can be a bit more direct with our declarations and let the discrete classes handle the data:
 ```cs
 Skeleton skeleton = new();
@@ -227,6 +241,7 @@ FireElemental fireElemental = new();
 Console.WriteLine($"{fireElemental.Name}: {fireElemental.StartingHP} HP"); 
 Console.WriteLine($"{skeleton.Name}: {skeleton.StartingHP} HP");
 ```
+
 With this design we avoid using fragile constructor calls that may contain name typos, invalid starting HP values, or mismatched MonsterType.
 
 However, a drawback becomes quickly apparent. What if the game added a new biome that warrants adding seven new monster types? We've now got a **class explosion** problem. We must manually create a new class for every new monster type we want in the game. This problem becomes worse if we adopt this same pattern for other types: Weapons, Armor, Items, Attacks, Spells, Attributes, etc. The number of classes grows rapidly.
@@ -268,6 +283,7 @@ public class Monster
     }
 }
 ```
+
 Yes, we are using switch expressions again. However, unlike before all logic is centralized in one class rather than scattered across multiple classes or methods. Adding a new property now requires updating only one class, not many (dozens or even hundreds) of subclasses.
 
 The benefits of this approach:
@@ -285,12 +301,14 @@ Console.WriteLine($"{fireElemental.Name}: {fireElemental.StartingHP} HP");
 Console.WriteLine($"{venomousSpider.Name}: {venomousSpider.StartingHP} HP"); 
 Console.WriteLine($"{ogre.Name}: {ogre.StartingHP} HP");
 ```
+
 **Console Output:**
 ```cs
 Fire Elemental: 10 HP
 Venomous Spider: 12 HP
 Ogre: 15 HP
 ```
+
 ### When Inheritance is the Correct Choice
 Use inheritance when derived classes should have different behaviors from other derived classes of the same base class. Realistically we'd have more properties such as CurrentHP, etc. but we will skip the verbosity.
 ```cs
@@ -335,6 +353,7 @@ public class FireElemental : Monster
 
 public enum DamageType { Physical, Cold, Fire }
 ```
+
 Now we start to see the benefits of inheritance with polymorphism. We no longer need the `MonsterType` enum because the type is inferred from the class names, and we can now define data inside each of the classes but now we have hte benefit of different behaviors. The extra work of declaring additional classes for each monster type is worth the effort.
 ### Optional Considerations
 #### Static Factory Method
@@ -358,6 +377,7 @@ public class Monster
 }
 public enum MonsterType { Goblin, Skeleton, Ogre, FireElemental, VenomousSpider }
 ```
+
 Now our instantiations are cleaner and less error-prone:
 ```cs
 Monster goblin = Monster.CreateGoblin();
@@ -373,6 +393,7 @@ Another alternative is to define `Monster` as a **record**. These work great for
 ```cs
 public record Monster(MonsterType monsterType, string Name, int StartingHP);
 ```
+
 Example usage:
 ```cs
 Monster fireElemental = new(MonsterType.FireElemental, "Fire Elemental", 10);
@@ -381,6 +402,7 @@ Monster ogre = new(MonsterType.Ogre, "Ogre", 15);
 Console.WriteLine($"{fireElemental.Name}: {fireElemental.StartingHP} HP");
 Console.WriteLine($"{ogre.Name}: {ogre.StartingHP} HP");
 ```
+
 Consequently, using a record still requires passing in strings and magic numbers (hardcoded values with no context) for each instance. This approach is fine for small programs, but it may introduce risks as the program grows (typos, inconsistent starting HP values, or incorrect names yet again).
 ## Thoughts Before You Go
 Everything discussed here isn't exhaustive, and I'd be remiss if I didn't mention that the recommended solution above using computed properties isn't prescriptive or "the best way". I didn't dive into more advanced topics such as a `Dictionary<>` which can be an excellent fit to this problem if you begin managing a larger set of data-oriented types.
