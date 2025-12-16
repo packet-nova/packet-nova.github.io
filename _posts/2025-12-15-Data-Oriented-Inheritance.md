@@ -314,7 +314,7 @@ Console.WriteLine($"{ogre.Name}: {ogre.StartingHP} HP");
 ```
 
 **Console Output:**
-```cs
+```console
 Fire Elemental: 10 HP
 Venomous Spider: 12 HP
 Ogre: 15 HP
