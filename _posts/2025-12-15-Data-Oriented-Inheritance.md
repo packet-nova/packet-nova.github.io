@@ -413,7 +413,7 @@ Console.WriteLine($"{ogre.Name}: {ogre.StartingHP} HP");
 ```
 
 Consequently, using a record still requires passing in strings and magic numbers (hardcoded values with no context) for each instance. This approach is fine for small programs, but it may introduce risks as the program grows (typos, inconsistent starting HP values, or incorrect names yet again).
-> INFO
+> INFO:
 > [Records](https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/builtin-types/record) were introduced in C# 9.0.
 
 ## Thoughts Before You Go
