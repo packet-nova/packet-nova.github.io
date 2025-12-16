@@ -85,7 +85,7 @@ Venomous Spider
 
 Now we have properly formatted display names and reusable code! The trade-off is **maintenance**. Whenever we add a new monster to the enum, we must also add a corresponding case to the switch expression. Failing to do this will result in returning "NO NAME SET" for otherwise valid monsters.
 
-I recommend heading to this article for further reading on parsing enumerations: https://csharpplayersguide.com/blog/2022/05/22/parsing-enumerations/
+I recommend heading to this article for further reading on parsing enumerations: [RB Whitaker: Parsing Enumations](https://csharpplayersguide.com/blog/2022/05/22/parsing-enumerations/)
 ## Classes and Data
 The previous section showed one way to get a string from an enum. There are other approaches, but they're outside the scope of this article. More importantly, we haven't addressed how to store starting HP values for each monster.
 
