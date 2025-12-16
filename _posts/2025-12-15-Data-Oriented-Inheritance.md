@@ -11,7 +11,7 @@ tags: [c#, inheritance, records, design]
 
 **"I have 15 classes and they all do the same thing... why did I do this?"**
 
-> Disclaimer: *This post does not advocate for or against inheritance or composition in general. I'd like to focus specifically on why using inheritance solely to represent different data values can be suboptimal, and why some consider an anti-pattern. I'll also talk about alternative approaches. This was inspired by lessons learned while learning C# with the [C# Player's Guide - RB Whitaker](https://csharpplayersguide.com/) for classes, enums, inheritance, and extracting strings from enums.*
+> **Disclaimer**: This post does not advocate for or against inheritance or composition in general. I'd like to focus specifically on why using inheritance solely to represent different data values can be suboptimal, and why some consider an anti-pattern. I'll also talk about alternative approaches. This was inspired by lessons learned while learning C# with the [C# Player's Guide - RB Whitaker](https://csharpplayersguide.com/) for classes, enums, inheritance, and extracting strings from enums.
 {: .prompt-info }
 
 In C# you may find yourself needing to create objects that share similarities. A simple example of this in games is monsters and items. For this exercise, let's stick with monsters.
@@ -423,7 +423,7 @@ Console.WriteLine($"{ogre.Name}: {ogre.StartingHP} HP");
 
 Consequently, using a record still requires passing in strings and magic numbers (hardcoded values with no context) for each instance. This approach is fine for small programs, but it may introduce risks as the program grows (typos, inconsistent starting HP values, or incorrect names yet again).
 
-> [Records](https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/builtin-types/record) were introduced in C# 9.0.
+> [The `record` type](https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/builtin-types/record) was introduced in C# 9.0.
 {: .prompt-info }
 
 ## Thoughts Before You Go
