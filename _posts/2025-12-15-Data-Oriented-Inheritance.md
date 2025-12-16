@@ -417,9 +417,9 @@ Console.WriteLine($"{ogre.Name}: {ogre.StartingHP} HP");
 Consequently, using a record still requires passing in strings and magic numbers (hardcoded values with no context) for each instance. This approach is fine for small programs, but it may introduce risks as the program grows (typos, inconsistent starting HP values, or incorrect names yet again).
 
 ## Thoughts Before You Go
-Everything discussed here isn't exhaustive, and I'd be remiss if I didn't mention that the recommended solution above using computed properties isn't prescriptive or "the best way". I didn't dive into more advanced topics such as a `Dictionary<>` which can be an excellent fit to this problem if you begin managing a larger set of data-oriented types.
+Everything discussed here isn't exhaustive, and I'd be remiss if I didn't mention that the recommended solution above using computed properties isn't prescriptive, the only, or even "the best way". I didn't dive into some advanced topics such as a `Dictionary<>` which could be a great fit to this problem if you begin managing a larger set of data-oriented types.
 
-That said, the `Monster` example used was purely demonstrative data-only class design. In a real game, monsters would certainly have *behavior*, and that's where inheritance and polymorphism shine. Here, the goal was to focus on a narrow, introductory case for beginners where the only difference are static data values.
+That said, the `Monster` example used was purely demonstrative data-only class design. In a real game, monsters would certainly have *behavior*, and that's where inheritance and polymorphism would shine. Here, the goal was to focus on a narrow, introductory case for beginners where the only difference are static data values.
 
 As you continue learning, remember to stay flexible. If you're stuck thinking "what if *this*?" or "what if *that*?", you may not make much progress getting any closer to a viable product. Code for what you need now. As the requirements change (they always do), you'll adjust accordingly.
 
@@ -428,6 +428,6 @@ I'll stop there, because going any further and we start getting into [YAGNI](htt
 ## Conclusion
 This anti-pattern occurs when we create class hierarchies solely to represent different static values. The maintenance cost grows linearly with new types and exponentially with new properties. Just to hold data without different behavior.
 
-**Beginner-Friendly Solution:** Use a single class with computed properties (can be with a getter on the property, or a separate method you can call on the property) derived from an enum. This centralizes logic, maintains type safety, and provides a single source of truth. For smaller projects, static factory methods offer a more flexible code by not having larger constructor calls.
+**Beginner-Friendly Solution:** Trying using a single class with computed properties (can be with a getter on the property, or a separate method you can call on the property) derived from an enum. This centralizes logic, maintains type safety, and provides a single source of truth. For smaller projects, static factory methods offer a more flexible code by not having larger constructor calls. Give each of them a shot and see how you like it. If you don't, try something else!
 
-Remember: use inheritance when subclasses have **different behavior**, not just different data.
+Remember: Use inheritance when subclasses have **different behavior**, not just different data.
