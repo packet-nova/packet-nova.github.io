@@ -2,6 +2,7 @@
 title: Data-Oriented Inheritance Anti-Pattern
 date: 2025-12-15
 ---
+
 ## The Problem
 Disclaimer: *This post does not advocate for or against inheritance or composition in general. I'd like to focus specifically on why using inheritance solely to represent different data values is an anti-pattern, and what we can use instead. This was inspired by lessons learned while working with classes, enums, inheritance, and extracting strings from enums.*
 
@@ -18,6 +19,7 @@ We start with a simple scenario: Our game has 3 different types of monsters: **G
 How should we model this in C#?
 
 In this article we’ll see why creating a whole class for each monster type is an anti-pattern when the _only difference between monsters is data_. Instead, we’ll look at simpler and safer ways to store it.
+
 ## Working with Enums
 Taking our three monster types, we can quickly represent them using an enumeration:
 ```cs
@@ -56,6 +58,7 @@ VenomousSpider
 Now we can see a limitation: printing the enum value gives us the member name verbatim, which may not be formatted as a *user-friendly* string. This can be problematic when displaying names to users or sending them to external systems (like files, databases, or even a UI).
 
 Let's explore a solution for getting properly formatted display names.
+
 ### Getting Strings from Enums
 Using the following enum:
 ```cs
@@ -92,6 +95,7 @@ Venomous Spider
 Now we have properly formatted display names and reusable code! The trade-off is **maintenance**. Whenever we add a new monster to the enum, we must also add a corresponding case to the switch expression. Failing to do this will result in returning "NO NAME SET" for otherwise valid monsters.
 
 I recommend heading to this article for further reading on parsing enumerations: [RB Whitaker: Parsing Enumations](https://csharpplayersguide.com/blog/2022/05/22/parsing-enumerations/)
+
 ## Classes and Data
 The previous section showed one way to get a string from an enum. There are other approaches, but they're outside the scope of this article. More importantly, we haven't addressed how to store starting HP values for each monster.
 
@@ -142,6 +146,7 @@ int goblinHealth = GetMonsterStartingHP(goblin);
 This approach becomes increasingly time-consuming to maintain. Every new monster requires updating both switch expressions (name and starting HP), and every new property means adding yet another mapping method. It’s tedious, error-prone, and easy to break as the codebase grows.
 
 Next, let’s explore how we can try to solve this by combining enums with classes.
+
 ### Using a Class
 The solution is to create a class that stores monster data while using an enum for the monster type identification. First, we need to rename our enum to avoid a naming conflict:
 ```cs
@@ -190,8 +195,10 @@ But... what prevents us from:
 - Having a typo with the name?
 - Setting a StartingHP value that would potentially be game-balance breaking? What about a negative value?
 - Accidentally creating a `MonsterType.FireElemental` but calling it an "Ogre"?
+
 ### Temptation of Inheritance
 After working with code like this a bit, or running into a random bug, you may wonder: "What if each of the monsters were their own class that contains definitions for all of these different pieces of data?"
+
 ## Using Inheritance
 With inheritance we can declare a base class, and even make it `abstract` which means that you will be unable to make an instance of that class and instead it's just used to model the derived classes. Additionally, we can mark the properties as abstract, which will enforce any derived classes to supply their own data:
 ```cs
@@ -251,6 +258,7 @@ Even **worse**:
 - Adding one new data property to the base class means updating every existing subclass
 
 This is a lot of boilerplate code where the only purpose is to hold different data and not different behavior. When inheritance is used only to represent different static values, the maintenance cost grows **linearly** for new types and **exponentially** for new properties.
+
 ## Solution(s)
 ```cs
 public class Monster
@@ -355,7 +363,9 @@ public enum DamageType { Physical, Cold, Fire }
 ```
 
 Now we start to see the benefits of inheritance with polymorphism. We no longer need the `MonsterType` enum because the type is inferred from the class names, and we can now define data inside each of the classes but now we have hte benefit of different behaviors. The extra work of declaring additional classes for each monster type is worth the effort.
+
 ### Optional Considerations
+
 #### Static Factory Method
 A consideration can be made if the program is small to create static factory methods using the same class structure above:
 ```cs
@@ -388,6 +398,7 @@ Monster venomousSpider = Monster.CreateVenomousSpider();
 ```
 
 This design is perfectly reasonable as a stepping-stone, but it still will have the problem when we want to create a new property. You'll have to then go back into each static method and update it with the new parameter.
+
 #### Using a Record
 Another alternative is to define `Monster` as a **record**. These work great for immutable data containers. Records automatically provide equality, `ToString()`, and several other features, making them convenient for simple data objects. The intricate details of Records are outside the scope here.
 ```cs
@@ -404,6 +415,7 @@ Console.WriteLine($"{ogre.Name}: {ogre.StartingHP} HP");
 ```
 
 Consequently, using a record still requires passing in strings and magic numbers (hardcoded values with no context) for each instance. This approach is fine for small programs, but it may introduce risks as the program grows (typos, inconsistent starting HP values, or incorrect names yet again).
+
 ## Thoughts Before You Go
 Everything discussed here isn't exhaustive, and I'd be remiss if I didn't mention that the recommended solution above using computed properties isn't prescriptive or "the best way". I didn't dive into more advanced topics such as a `Dictionary<>` which can be an excellent fit to this problem if you begin managing a larger set of data-oriented types.
 
@@ -412,6 +424,7 @@ That said, the `Monster` example used was purely demonstrative data-only class d
 As you continue learning, remember to stay flexible. If you're stuck thinking "what if *this*?" or "what if *that*?", you may not make much progress getting any closer to a viable product. Code for what you need now. As the requirements change (they always do), you'll adjust accordingly.
 
 I'll stop there, because going any further and we start getting into [YAGNI](https://en.wikipedia.org/wiki/You_aren%27t_gonna_need_it) territory, to which there's plenty out there to read about.
+
 ## Conclusion
 This anti-pattern occurs when we create class hierarchies solely to represent different static values. The maintenance cost grows linearly with new types and exponentially with new properties. Just to hold data without different behavior.
 
