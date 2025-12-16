@@ -16,7 +16,7 @@ timezone: America/New_York
 
 title:  Packet Nova # the main title
 
-tagline: A Technical Blog # it will display as the subtitle
+tagline: Programming and Tech # it will display as the subtitle
 
 description: >- # used by seo meta and the atom feed
   A longer description
