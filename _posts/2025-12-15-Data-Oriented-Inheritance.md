@@ -413,8 +413,9 @@ Console.WriteLine($"{ogre.Name}: {ogre.StartingHP} HP");
 ```
 
 Consequently, using a record still requires passing in strings and magic numbers (hardcoded values with no context) for each instance. This approach is fine for small programs, but it may introduce risks as the program grows (typos, inconsistent starting HP values, or incorrect names yet again).
-> INFO:
+
 > [Records](https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/builtin-types/record) were introduced in C# 9.0.
+{: .prompt-info }
 
 ## Thoughts Before You Go
 Everything discussed here isn't exhaustive, and I'd be remiss if I didn't mention that the recommended solution above using computed properties isn't prescriptive, the only, or even "the best way". I didn't dive into some advanced topics such as a `Dictionary<>` which could be a great fit to this problem if you begin managing a larger set of data-oriented types.
