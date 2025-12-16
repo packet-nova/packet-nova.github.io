@@ -7,7 +7,7 @@ date: 2025-12-15
 
 **"I've created 15 classes and they all do the same thing... why did I do this?"**
 
-Disclaimer: *This post does not advocate for or against inheritance or composition in general. I'd like to focus specifically on why using inheritance solely to represent different data values is an anti-pattern, and what we can use instead. This was inspired by lessons learned while working with classes, enums, inheritance, and extracting strings from enums.*
+Disclaimer: *This post does not advocate for or against inheritance or composition in general. I'd like to focus specifically on why using inheritance solely to represent different data values can be suboptimal, and why some consider an anti-pattern. I'll also talk about alternative approaches. This was inspired by lessons learned while working with classes, enums, inheritance, and extracting strings from enums.*
 
 Audience: Beginner to early-intermediate/novice.
 
@@ -21,7 +21,7 @@ We start with a simple scenario: Our game has 3 different types of monsters: **G
 
 How should we model this in C#?
 
-In this article we’ll see why creating a whole class for each monster type is an anti-pattern when the _only difference between monsters is data_. Instead, we’ll look at simpler and safer ways to store it.
+In this article we’ll see why creating a whole class for each monster type is undesirable when the _only difference between monsters is data_. We'll then look at simpler and safer ways to store it.
 
 ## Working with Enums
 Taking our three monster types, we can quickly represent them using an enumeration:
@@ -397,7 +397,7 @@ Monster venomousSpider = Monster.CreateVenomousSpider();
 This design is perfectly reasonable as a stepping-stone, but it still will have the problem when we want to create a new property. You'll have to then go back into each static method and update it with the new parameter.
 
 #### Using a Record
-Another alternative is to define `Monster` as a **record**. These work great for immutable data containers. Records automatically provide equality, `ToString()`, and several other features, making them convenient for simple data objects. The intricate details of Records are outside the scope here.
+Another alternative is to define `Monster` as a **record**. These are ideal for data containers because records are **immutable by default** and automatically provide equality checks, `ToString()`, and other features. The intricate details of Records are outside the scope here.
 ```cs
 public record Monster(MonsterType monsterType, string Name, int StartingHP);
 ```
@@ -425,6 +425,6 @@ I'll stop there, because going any further and we start getting into [YAGNI](htt
 ## Conclusion
 This anti-pattern occurs when we create class hierarchies solely to represent different static values. The maintenance cost grows linearly with new types and exponentially with new properties. Just to hold data without different behavior.
 
-**Beginner-Friendly Solution:** Trying using a single class with computed properties (can be with a getter on the property, or a separate method you can call on the property) derived from an enum. This centralizes logic, maintains type safety, and provides a single source of truth. For smaller projects, static factory methods offer a more flexible code by not having larger constructor calls. Give each of them a shot and see how you like it. If you don't, try something else!
+**Beginner-Friendly Solution:** Try using a single class with computed properties (either with a getter or a separate method) derived from an enum. This centralizes logic, maintains type safety, and provides a single source of truth. For smaller projects, static factory methods can make things cleaner by avoiding larger constructor calls. Give each of them a chance and see how you like it. If you don't, try something else!
 
 Remember: Use inheritance when subclasses have **different behavior**, not just different data.
